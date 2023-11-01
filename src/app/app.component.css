@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=Podkova:wght@800&display=swap');
+
+.nav-bar{
+    background-color: #17C375;   
+    max-height: 70px;
+    display: flex;
+    padding: 5px;
+}
+
+.logo{
+    display: flex;
+    justify-content: center;
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.pokedex-logo{
+    background-image: url("../assets/Katzer’s Pokedex.png");
+    width: 400px;
+    height: 70px;
+}
+
+.api-logo{
+    background-image: url("../assets/api.svg");
+    width: 47px;
+    height: 47px;
+}
+
+.logo span{
+    color: rgba(235, 31, 31, 0.91);
+}
+
+.main{
+    display: flex;
+    height: 120vh;
+    flex-direction: column;
+}
+
+.main-wallpaper{
+    background-image: url("../assets/pokemon-emerald-wallpaper.png");
+    background-position:bottom;
+    background-size:contain;
+}
+
+@media screen and (max-width:1000px){
+    .main-wallpaper{
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+}
+
+.snorlax-container{
+    width: 40%;
+    height: 100%;
+    display: flex;
+    flex-direction: column-reverse;
+    margin-left: 4%;
+    margin-bottom: 3%;
+}
+
+.snorlax{
+    background-image: url("../assets/snorlax.gif");
+    width: 100%;
+    min-width: 200px;
+    min-height: 391px;
+    height: auto;
+    transform: scaleX(-1);
+    background-position: bottom;
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: relative;
+    z-index: 1;
+    
+}
+
+.shadow{
+    width: 30%;
+    height: 80px;
+    min-width: 150px;
+    max-width: 400px;
+    margin-left: 7.8%;
+
+    border-radius: 100%;
+    background: rgba(0, 0, 0, 0.43);
+    filter: blur(30px);
+
+    z-index: 0;
+    position: absolute;
+    left: 10px;
+}
+
+.poster{
+    display: flex;
+    flex-direction: column;
+
+    min-width: 200px;
+    width: 50%;
+    height: max(41%, 307px);     
+
+    margin-right: min(5%, 60px);
+    margin-top: 28px; 
+    padding-inline:30px;
+    border-radius: 62px;
+    background: rgba(218, 218, 218, 0.66);
+    background-blend-mode: lighten;
+    box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.25);
+    
+    position: absolute;
+    align-self:flex-end;
+}
+
+.poster h1{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0px;
+    margin-top: 15px;
+    
+    color: #FFF;
+    text-shadow: 7px 6px 4px rgba(0, 0, 0, 0.25);
+    -webkit-text-stroke: 2px black;
+
+    font-family: Podkova;
+    font-size: 6vw;
+    font-size: max(5vw, 38px);
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.poster p{
+    color: #233E27;
+    font-family: Podkova;
+    font-size: clamp(16px, 3.5vw, 22px);
+    font-style: normal;
+    font-weight: 600;
+    line-height: 131.8%; /* 26.36px */
+    letter-spacing: 1.2px;
+}
+
+.trees{
+    width: 100%;
+    height: 379px;
+    background-image: url("../assets/Arboles.png");
+    background-position: bottom;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
