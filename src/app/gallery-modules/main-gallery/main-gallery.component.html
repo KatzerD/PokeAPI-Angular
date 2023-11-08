@@ -1,0 +1,35 @@
+<div class="trees"></div>
+<!--img class="trees" src="../../../assets/Arboles.png" alt=""-->
+
+<section class="main-gallery">
+
+    <div class="gallery">
+        
+        <div class="gallery-form">
+            
+                <app-pokedex-search></app-pokedex-search>
+
+                <app-pokedex-filter></app-pokedex-filter>
+            
+        </div>
+        
+        <div class="gallery-cards">
+            <div *ngFor="let pokemon of pokemonListSpecies; let i = index">
+                <div class="pokemon">Este es {{pokemon.name}}</div>
+            </div>
+
+            <app-pokemon-card>
+                [loading]='loading'
+                [error]='error'
+                [pokemon]='pokemon'
+            </app-pokemon-card>
+
+            <button (click)="minusInterval()">-</button>
+            <button (click)="plusInterval()">+</button>
+            
+        </div>
+        
+    </div>
+
+    
+</section>

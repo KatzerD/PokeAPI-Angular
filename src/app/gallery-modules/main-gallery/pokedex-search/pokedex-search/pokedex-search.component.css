@@ -1,0 +1,121 @@
+input{
+    border: 0;
+    outline: 0;
+}
+
+input::placeholder{
+    color: #FFFFFF;
+}
+
+select{
+    border: 0;
+    outline: 0;
+}
+select::placeholder{
+    color: white;
+}
+
+.search-form{
+    display: flex;
+    padding: 16px;
+}
+
+.search-button{
+    width: 300px;
+    height: 60px;
+    box-shadow: 3px 4px 0px 0px rgba(0, 0, 0, 0.20);
+    color: #FFFFFF;
+    border-radius: 31.5px;
+    background: #2BA964;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.border-search-button{
+    width: 290px;
+    height: 50px;
+    border-radius: 29.5px;
+    border: 2px solid #FFF;
+    background: rgba(43, 169, 100, 0.00);
+    display: flex;
+}
+
+.border-search-button input[name="pokemonName"]{
+    width: 70%;
+
+    color:#FFFFFF;
+    background-color: transparent;
+
+    padding: 15px;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 131.8%; /* 26.36px */
+    letter-spacing: 1.2px;
+}
+
+.border-search-button input[name="submit"]{
+    width: 30%;
+
+    color: transparent;
+    background: url('/assets/lupa.svg') no-repeat center;
+}
+
+.search-type{
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
+    margin-left: 16px;
+    background-color: #2BA964;
+    box-shadow: 3px 4px 0px 0px rgba(0, 0, 0, 0.20);
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.border-search-type{
+    width: 53px;
+    height: 53px;
+    flex-shrink: 0;
+    background-color: transparent;
+    border-radius: 100%;
+    border: 2px solid #FFF;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+
+    text-align: center;
+    font-family: Arial;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 131.8%; /* 42.176px */
+    letter-spacing: 1.92px;
+
+    appearance: none;
+
+}
+
+.border-search-type option{
+    background-color: #2BA964;
+    border: none;
+    outline: 0;
+    display: flex;
+    font-weight: 700;
+}
+
+.filter-catalogue{
+    position: absolute;
+    margin-left: 16px;
+    color: #170B0B;
+    font-family: Arial;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 131.8%; /* 21.088px */
+    letter-spacing: 0.96px;
+}
