@@ -13,6 +13,7 @@ export class MainGalleryComponent implements OnInit {
   public pokemon: any;
   public pokemonSpecie: any;
   public pokemonListSpecies: Array<Pokemon> | any;
+  public pokemonList: Array<any>;
   public pokemonId: number = 0;
   public loading: boolean = true;
   public error: boolean = false;
@@ -22,6 +23,7 @@ export class MainGalleryComponent implements OnInit {
   public id: number;
   public name: string;
   public names: Array<any>;
+  public genera: string; 
   public description: object;
   public varieties: Array<any>;
   public types: Array<any>;
@@ -36,6 +38,8 @@ export class MainGalleryComponent implements OnInit {
   public specialDefense: number;
   public speed: number;
 
+  public elmnt = document.getElementsByClassName("content");
+
   constructor(
     private _pokemonService: PokemonService
   ) {
@@ -43,6 +47,7 @@ export class MainGalleryComponent implements OnInit {
     this.id = 0;
     this.name = "";
     this.names = [];
+    this.genera = "";
     this.description = {};
     this.varieties = [];
     this.types = [];
@@ -57,105 +62,114 @@ export class MainGalleryComponent implements OnInit {
     this.specialDefense = 0;
     this.speed = 0;
 
+    this.pokemonList = [];
+
   }
 
   ngOnInit(): void {
     this.loadPokemonList();
   }
 
-  loadPokemonList() {
-    this._pokemonService.getPokemonSpeciesInterval(this.offset, this.limit).subscribe(
-      results => {
-        if (results && results != null) {
-          this.pokemonListSpecies = results.results;
+  async loadPokemonList() {
 
-          for (let i = 0; i < this.pokemonListSpecies.length; i++) {
+    this.pokemonList = [];
 
-            let pokemonSpecie = this.loadPokemonDataSpecie(this.pokemonListSpecies[i].url);
-            
-            //this.pokemon = new Pokemon(this.id, this.name, this.names, this.description, this.varieties, this.types, this.generation, this.height, this.weight, this.sprite, this.hp, this.attack, this.defense, this.specialAttack, this.specialDefense, this.speed)
+    const result = await this._pokemonService.getPokemonSpeciesInterval(this.offset, this.limit).toPromise();
 
-            console.log(pokemonSpecie)
-          }
+    if (result && result != null) {
+      this.pokemonListSpecies = result.results;
 
-          this.loading = false;
-          this.error = false;
+      for (let i = 0; i < this.pokemonListSpecies.length; i++) {
 
-        } else {
-          this.pokemonListSpecies = undefined;
-          this.loading = false;
-          this.error = true;
-          console.error('No se encontró el pokemon o no tiene un nombre válido:', results);
-        }
-      },
-      error => {
-        console.error('Error al obtener el pokemon:', error);
+
+        let pokemonSpecie = await this.loadPokemonDataSpecie(this.pokemonListSpecies[i].url);
+        let pokemonData = await this.loadPokemonData(pokemonSpecie.id);
+
+        this.pokemon = { pokemonSpecie, pokemonData };
+        this.pokemonList.push(this.pokemon);
+
       }
-    )
+
+
+
+    } else {
+
+      this.pokemonListSpecies = undefined;
+      this.loading = false;
+      this.error = true;
+      console.error('No se encontró el pokemon o no tiene un nombre válido:', result);
+    }
+
   }
 
-  loadPokemonDataSpecie(url: string): any {
+  async loadPokemonDataSpecie(url: string): Promise<any> {
 
-    this._pokemonService.getPokemonSpecieByUrl(url).subscribe(
-      result => {
-        this.id = result.id;
-        this.description = result.flavor_text_entries[0];
-        this.name = result.name;
-        this.names = result.names;
-        this.varieties = result.varieties;
+    try {
+      const result = await this._pokemonService.getPokemonSpecieByUrl(url).toPromise();
+      this.id = result.id;
+      this.description = result.flavor_text_entries[0];
+      this.name = result.name;
+      this.names = result.names;
 
-        let pokemonSpecie = {
-          "id": this.id,
-          "description": this.description,
-          "name": this.name,
-          "names": this.names,
-          "varieties" : this.varieties
-        }
-        
-        return pokemonSpecie
-        
-      },
-      error => {
-        console.log("Error: " + error);
-        return undefined;
+      const englishGenera = result.genera.find((entry: any) => entry.language.name === "es");
+
+      if (englishGenera) {
+        this.genera = englishGenera.genus;
       }
-    )
+
+      this.varieties = result.varieties;
+
+      let pokemonSpecie = {
+        "id": this.id,
+        "description": this.description,
+        "name": this.name,
+        "names": this.names,
+        "genera": this.genera,
+        "varieties": this.varieties
+      };
+
+
+      return pokemonSpecie;
+    } catch (error) {
+      console.log("Error: " + error);
+      return undefined;
+    }
+
   }
 
-  loadPokemonData(pokemonId: number): any {
+  async loadPokemonData(pokemonId: number): Promise<any> {
 
-    this._pokemonService.getPokemon(pokemonId).subscribe(
-      result => {
-        this.height = result.height;
-        this.weight = result.weight;
-        this.sprite = result.sprites.other;
-        this.hp = result.stats[0].base_stat;
-        this.attack = result.stats[1].base_stat;
-        this.defense = result.stats[2].base_stat;
-        this.specialAttack = result.stats[3].base_stat;
-        this.specialDefense = result.stats[4].base_stat;
-        this.speed = result.stats[5].base_stat;
-        this.types = result.types;
+    try {
+      const result = await this._pokemonService.getPokemon(pokemonId).toPromise();
+      this.height = result.height;
+      this.weight = result.weight;
+      this.sprite = result.sprites.other;
+      this.hp = result.stats[0].base_stat;
+      this.attack = result.stats[1].base_stat;
+      this.defense = result.stats[2].base_stat;
+      this.specialAttack = result.stats[3].base_stat;
+      this.specialDefense = result.stats[4].base_stat;
+      this.speed = result.stats[5].base_stat;
+      this.types = result.types;
 
-        let pokemonData = {
-          "height": this.height,
-          "weight": this.weight,
-          "sprite": this.sprite,
-          "hp": this.hp,
-          "attack": this.attack,
-          "defense": this.defense,
-          "specialAttack": this.specialAttack,
-          "specialDefense": this.specialDefense,
-          "speed": this.speed,
-          "types": this.types
-        }
-
-        return pokemonData;
-      },
-      error => {
-
+      let pokemonData = {
+        "height": this.height,
+        "weight": this.weight,
+        "sprite": this.sprite,
+        "hp": this.hp,
+        "attack": this.attack,
+        "defense": this.defense,
+        "specialAttack": this.specialAttack,
+        "specialDefense": this.specialDefense,
+        "speed": this.speed,
+        "types": this.types
       }
-    );
+
+      return pokemonData;
+    } catch(error){
+      console.log(error)
+    }
+
   }
 
 
@@ -170,5 +184,9 @@ export class MainGalleryComponent implements OnInit {
       this.offset -= 15;
       this.loadPokemonList();
     }
+  }
+
+  scrollToTop(){
+    
   }
 }

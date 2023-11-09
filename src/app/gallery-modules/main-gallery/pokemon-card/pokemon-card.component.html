@@ -1,3 +1,36 @@
-<div class="pokemon-card" >
+<!--div *ngIf="loading !== undefined && loading">
+    <p>Cargando...</p>
+  </div>
+  <div *ngIf="error !== undefined && error">
+    Ha ocurrido un error.
+  </div>
+  <div *ngIf="pokemon">
+    <div>{{ pokemon.pokemonSpecie.name }}</div>
+</div-->
+
+
+<div class="card">
+    <div class="top-card">
+        <img class="pokemon-sprite" [src]="pokemon.pokemonData.sprite['official-artwork'].front_default"
+            alt="{{pokemon.name}}">
+        <span class="pokemon-id">{{ ('0000' + pokemon.pokemonSpecie.id).slice(-4) }}</span>
+    </div>
+    <div class="bottom-card">
+        <div class="pokemon-content">
+            <span class="pokemon-nameEs">{{ getSpanishName(pokemon.pokemonSpecie.names) }}</span>
+            <span *ngFor="let type of pokemon.pokemonData.types" class="pokemon-types">{{type.type.name}}</span>
+
+            <p class="pokemon-genera">{{pokemon.pokemonSpecie.genera}}</p>
+
+            <div class="pokemon-stats">
+                <div class="stat hp">HP <span>{{pokemon.pokemonData.hp}}</span></div>
+                <div class="stat att">ATT <span>{{pokemon.pokemonData.attack}}</span></div>
+                <div class="stat def">DEF <span>{{pokemon.pokemonData.defense}}</span></div>
+                <div class="stat sp-att">SP-ATT <span>{{pokemon.pokemonData.specialAttack}}</span></div>
+                <div class="stat sp-def">SP-DEF <span>{{pokemon.pokemonData.specialDefense}}</span></div>
+                <div class="stat speed">SPEED <span>{{pokemon.pokemonData.speed}}</span></div>
+            </div>
+        </div>
+    </div>
 
 </div>
